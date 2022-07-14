@@ -2,10 +2,10 @@
   list-style: none;
   display: flex;
   flex-direction: column;
-  gap: 3rem;
-  overflow: auto;
-  width: 35rem;
   align-items: center;
   justify-content: flex-start;
+  gap: 3.6rem;
+  overflow: auto;
+  width: 35rem;
   height: 50rem;
 }

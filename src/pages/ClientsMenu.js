@@ -66,37 +66,6 @@ const ClientsMenu = () => {
     e.preventDefault();
     const chosenClient = clientRef.current.value;
     // console.log(chosenClient);
-    const clientsProcessed = [];
-
-    for (const key in fetchedClients) {
-      clientsProcessed.push({
-        id: fetchedClients[key].id,
-        name: fetchedClients[key].name,
-        linkedUsers: fetchedClients[key].linkedUsers,
-        availableProducts: fetchedClients[key].availableProducts,
-      });
-    }
-
-    const usersProcessed = [];
-
-    for (const key in fetchedUsers) {
-      usersProcessed.push({
-        id: fetchedUsers[key].id,
-        name: fetchedUsers[key].name,
-        linkedClients: fetchedUsers[key].linkedClients,
-        availableProducts: fetchedUsers[key].availableProducts,
-      });
-    }
-
-    const productsProcessed = [];
-
-    for (const key in fetchedProducts) {
-      productsProcessed.push({
-        id: fetchedProducts[key].id,
-        name: fetchedProducts[key].name,
-        availableToClients: fetchedProducts[key].availableToClients,
-      });
-    }
 
     setRenderedUsers(
       usersProcessed.filter(user => user.linkedClients.includes(chosenClient))

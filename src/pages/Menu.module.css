@@ -33,25 +33,30 @@
 .layout .row form {
   display: flex;
   flex-direction: column;
-  align-items: space-between;
-  gap: 4.8rem;
+  align-items: center;
   justify-content: flex-start;
+  gap: 3.6rem;
   font-family: inherit;
   font-size: 1.8rem;
   height: 30rem;
 }
 
 .layout .row form select {
-  height: 3.6rem;
+  height: 9.6rem;
   width: 30rem;
   font-family: inherit;
   font-size: 2.4rem;
   color: #071e33;
   text-align: center;
   border-radius: 8px;
+  border: 2px solid #4683bc;
+  border-bottom: 6px solid #4683bc;
+  background-color: #ced4da;
 }
 
 .layout .row form select option {
+  text-align: center;
+  background-color: #ced4da;
   color: #071e33;
 }
 
@@ -70,16 +75,15 @@
   color: #071e33;
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
   padding: 1rem;
-  transition: all 100ms;
+  transition: all 50ms;
 }
 
-.layout .row form button:hover,
-.layout .row form button:active {
-  transform: scale(1.02);
+.layout .row form button:hover {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  color: #4683bc;
 }
 .layout .row form button:active {
   box-shadow: 0 5px 10px rgba(0, 0, 0, 0.15);
-  transform: scale(1);
-  transition-duration: 50ms;
+  border: 1px solid #4683bc;
+  border-bottom: 3px solid #4683bc;
 }
