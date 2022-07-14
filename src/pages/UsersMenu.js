@@ -66,12 +66,11 @@ const UsersMenu = () => {
   const onSubmitHandler = e => {
     e.preventDefault();
     const chosenUser = userRef.current.value;
-    // console.log(chosenClient);
 
     setRenderedClient(
       clientsProcessed.filter(client => client.linkedUsers.includes(chosenUser))
     );
-    // console.log(renderedUsers);
+
     setRenderedProducts(
       productsProcessed.filter(product =>
         product.availableToUsers.includes(chosenUser)
@@ -83,32 +82,39 @@ const UsersMenu = () => {
   };
 
   return (
-    <div className={classes.layout}>
-      <div className={classes.row}>
-        <form onSubmit={onSubmitHandler}>
-          <label htmlFor='user' className={classes.description}>
-            Выберите пользователя:
-          </label>
-          <select ref={userRef} name='users' id='user'>
-            {usersSelector}
-          </select>
-          <button type='submit'>Выбрать</button>
-        </form>
-      </div>
-      <div className={classes.row}>
-        {userIsChosen && (
-          <span className={classes.description}>Связанный клиент</span>
-        )}
-        {userIsChosen && <List data={renderedClient} />}
-      </div>
-      <div className={classes.row}>
-        {userIsChosen && (
-          <span className={classes.description}>
-            Продукты, доступные пользователю
-          </span>
-        )}
-        {userIsChosen && <List data={renderedProducts} />}
-      </div>
+    <div className={classes.container}>
+      <main className={classes.lists}>
+        <div className={classes.row}>
+          <form onSubmit={onSubmitHandler}>
+            <label htmlFor='user' className={classes.description}>
+              Выберите пользователя:
+            </label>
+            <select ref={userRef} name='users' id='user'>
+              {usersSelector}
+            </select>
+            <button type='submit'>Выбрать</button>
+          </form>
+        </div>
+        <div className={classes.row}>
+          {userIsChosen && (
+            <span className={classes.description}>Связанный клиент</span>
+          )}
+          {userIsChosen && <List data={renderedClient} />}
+        </div>
+        <div className={classes.row}>
+          {userIsChosen && (
+            <span className={classes.description}>Доступные продукты</span>
+          )}
+          {userIsChosen && <List data={renderedProducts} />}
+        </div>
+      </main>
+      {userIsChosen && (
+        <div className={classes.buttons}>
+          <button className={classes.add}>Добавить</button>
+          <button className={classes.edit}>Редактировать</button>
+          <button className={classes.delete}>Удалить</button>
+        </div>
+      )}
     </div>
   );
 };

@@ -82,30 +82,39 @@ const ProductsMenu = () => {
   };
 
   return (
-    <div className={classes.layout}>
-      <div className={classes.row}>
-        <form onSubmit={onSubmitHandler}>
-          <label htmlFor='user' className={classes.description}>
-            Выберите продукт:
-          </label>
-          <select ref={productRef} name='users' id='user'>
-            {productsSelector}
-          </select>
-          <button type='submit'>Выбрать</button>
-        </form>
-      </div>
-      <div className={classes.row}>
-        {productIsChosen && (
-          <span className={classes.description}>Связанные клиенты</span>
-        )}
-        {productIsChosen && <List data={renderedClients} />}
-      </div>
-      <div className={classes.row}>
-        {productIsChosen && (
-          <span className={classes.description}>Связанные пользователи</span>
-        )}
-        {productIsChosen && <List data={renderedUsers} />}
-      </div>
+    <div className={classes.container}>
+      <main className={classes.lists}>
+        <div className={classes.row}>
+          <form onSubmit={onSubmitHandler}>
+            <label htmlFor='user' className={classes.description}>
+              Выберите продукт:
+            </label>
+            <select ref={productRef} name='users' id='user'>
+              {productsSelector}
+            </select>
+            <button type='submit'>Выбрать</button>
+          </form>
+        </div>
+        <div className={classes.row}>
+          {productIsChosen && (
+            <span className={classes.description}>Связанные клиенты</span>
+          )}
+          {productIsChosen && <List data={renderedClients} />}
+        </div>
+        <div className={classes.row}>
+          {productIsChosen && (
+            <span className={classes.description}>Связанные пользователи</span>
+          )}
+          {productIsChosen && <List data={renderedUsers} />}
+        </div>
+      </main>
+      {productIsChosen && (
+        <div className={classes.buttons}>
+          <button className={classes.add}>Добавить</button>
+          <button className={classes.edit}>Редактировать</button>
+          <button className={classes.delete}>Удалить</button>
+        </div>
+      )}
     </div>
   );
 };

@@ -23,18 +23,20 @@ const MainMenu = () => {
 
   return (
     <Fragment>
-      <div className={classes.layout}>
-        <div className={classes.row}>
-          <span className={classes.description}>Наши клиенты</span>
-          <List data={clientsState} />
-        </div>
-        <div className={classes.row}>
-          <span className={classes.description}>Список пользователей</span>
-          <List data={usersState} />
-        </div>
-        <div className={classes.row}>
-          <span className={classes.description}>Наши продукты</span>
-          <List data={productsState} />
+      <div className={classes.container}>
+        <div className={classes.lists}>
+          <div className={classes.row}>
+            <span className={classes.description}>Наши клиенты</span>
+            <List data={clientsState} />
+          </div>
+          <div className={classes.row}>
+            <span className={classes.description}>Список пользователей</span>
+            <List data={usersState} />
+          </div>
+          <div className={classes.row}>
+            <span className={classes.description}>Наши продукты</span>
+            <List data={productsState} />
+          </div>
         </div>
       </div>
     </Fragment>
