@@ -11,6 +11,7 @@
   background-color: #ced4da;
   padding: 2rem;
   border-radius: 8px;
+  animation: slide-down 300ms ease-out forwards;
 }
 
 /* List outputs */
@@ -189,4 +190,15 @@
   border-bottom: 3px solid #f03e3e;
   background-color: #f03e3e;
   /* margin: 1px 1px 3px 1px; */
+}
+
+@keyframes slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-3rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
