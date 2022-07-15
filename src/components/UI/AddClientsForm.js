@@ -1,59 +1,57 @@
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useState } from 'react';
 import Modal from './Modal';
 
 import './AddForm.css';
 
 const AddClientsForm = props => {
+  const [enteredName, setEnteredName] = useState('');
   const [userIsChecked, setUserIsChecked] = useState([]);
   const [productIsChecked, setProductIsChecked] = useState([]);
-
-  const nameRef = useRef('');
-  const usersRef = useRef([]);
-  const productsRef = useRef([]);
+  console.log(userIsChecked, productIsChecked);
 
   const users = props.users;
   const products = props.products;
 
   // ⬇ Handlers
+  const nameHandler = e => {
+    setEnteredName(e.target.value);
+  };
+
   const userCheckedHandler = e => {
-    console.log(e.target.value);
-    let updatedList = [...userIsChecked];
+    let checkedUsers = userIsChecked;
     if (e.target.checked) {
-      updatedList = [...userIsChecked, e.target.value];
+      checkedUsers.push(e.target.value);
     } else {
-      updatedList.splice(userIsChecked.indexOf(e.target.value), 1);
+      checkedUsers.splice(userIsChecked.indexOf(e.target.value), 1);
     }
-    // setUserIsChecked(updatedList);
-    setUserIsChecked(prevState => prevState.push(...updatedList));
-    console.log(userIsChecked);
+    setUserIsChecked(checkedUsers);
   };
 
   const productCheckedHandler = e => {
-    let updatedList = [...productIsChecked];
-    if (e.target.productIsChecked) {
-      updatedList = [...productIsChecked, e.target.value];
+    let checkedProducts = productIsChecked;
+    if (e.target.checked) {
+      checkedProducts.push(e.target.value);
     } else {
-      updatedList.splice(productIsChecked.indexOf(e.target.value), 1);
+      checkedProducts.splice(productIsChecked.indexOf(e.target.value), 1);
     }
-    setProductIsChecked(prevState => prevState.concat(updatedList));
-    console.log(productIsChecked);
+    setProductIsChecked(checkedProducts);
   };
 
   const onSubmitHandler = e => {
     e.preventDefault();
     const newClient = {
-      name: nameRef,
-      linkedUsers: usersRef,
-      availableProducts: productsRef,
+      name: enteredName,
+      linkedUsers: userIsChecked,
+      availableProducts: productIsChecked,
       id: `c${Math.trunc(Math.random() * 1000)}`,
     };
     console.log(newClient);
-    console.log('some shit is definetly going on');
+    props.onHideModal();
   };
 
   // ⬇ Lists of checkboxes
   const usersSelector = users.map((user, index) => (
-    <div ref={usersRef} className='checkbox' key={index}>
+    <div className='checkbox' key={index}>
       <input
         type='checkbox'
         id='user'
@@ -66,7 +64,7 @@ const AddClientsForm = props => {
   ));
 
   const productsSelector = products.map((product, index) => (
-    <div ref={productsRef} className='checkbox' key={index}>
+    <div className='checkbox' key={index}>
       <input
         type='checkbox'
         id='product'
@@ -81,12 +79,12 @@ const AddClientsForm = props => {
   return (
     <Modal onHideModal={props.onHideModal}>
       <Fragment>
-        <form onSubmit={onSubmitHandler} className='form'>
+        <form className='form'>
           <div className='input'>
             <label htmlFor='name' className='description'>
               Наименование клиента
             </label>
-            <input ref={nameRef} id='name'></input>
+            <input onBlur={nameHandler} id='name'></input>
           </div>
           <div className='input'>
             <label htmlFor='users' className='description'>
@@ -102,7 +100,10 @@ const AddClientsForm = props => {
           </div>
         </form>
         <div className='buttons-panel'>
-          <button type='submit' className='btn btn--submit'>
+          <button
+            onClick={onSubmitHandler}
+            type='submit'
+            className='btn btn--submit'>
             Подтвердить
           </button>
           <button onClick={props.onHideModal} className='btn btn--cancel'>
