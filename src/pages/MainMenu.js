@@ -1,37 +1,25 @@
 import { Fragment } from 'react';
-import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchCommonData } from '../store/common-actions';
 
 import List from '../components/Lists/List';
 
 import classes from './Menu.module.css';
 
-const MainMenu = () => {
-  const dispatch = useDispatch();
-  const clientsState = useSelector(state => state.commonState.clients);
-  const usersState = useSelector(state => state.commonState.users);
-  const productsState = useSelector(state => state.commonState.products);
-
-  useEffect(() => {
-    dispatch(fetchCommonData());
-  }, [dispatch]);
-
+const MainMenu = props => {
   return (
     <Fragment>
       <div className={classes.container}>
         <div className={classes.lists}>
           <div className={classes.row}>
             <span className={classes.description}>Наши клиенты</span>
-            <List data={clientsState} />
+            <List data={props.clients} />
           </div>
           <div className={classes.row}>
             <span className={classes.description}>Список пользователей</span>
-            <List data={usersState} />
+            <List data={props.users} />
           </div>
           <div className={classes.row}>
             <span className={classes.description}>Наши продукты</span>
-            <List data={productsState} />
+            <List data={props.products} />
           </div>
         </div>
       </div>

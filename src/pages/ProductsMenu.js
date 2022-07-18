@@ -1,27 +1,17 @@
-import { useEffect, useRef, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchClientsData } from '../store/clients-actions';
-import { fetchUsersData } from '../store/users-actions';
-import { fetchProductsData } from '../store/products-actions';
+import { useRef, useState } from 'react';
 
 import List from '../components/Lists/List';
 import classes from './Menu.module.css';
 
-const ProductsMenu = () => {
+const ProductsMenu = props => {
   const [productIsChosen, setProductIsChosen] = useState(false);
   const [renderedClients, setRenderedClients] = useState([]);
   const [renderedUsers, setRenderedUsers] = useState([]);
   const productRef = useRef('');
-  const dispatch = useDispatch();
-  const fetchedClients = useSelector(state => state.clients.clients);
-  const fetchedUsers = useSelector(state => state.users.users);
-  const fetchedProducts = useSelector(state => state.products.products);
 
-  useEffect(() => {
-    dispatch(fetchClientsData());
-    dispatch(fetchUsersData());
-    dispatch(fetchProductsData());
-  }, [dispatch]);
+  const fetchedClients = props.clients;
+  const fetchedUsers = props.users;
+  const fetchedProducts = props.products;
 
   const clientsProcessed = [];
 

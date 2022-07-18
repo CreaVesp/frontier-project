@@ -1,13 +1,11 @@
-import { Fragment, useEffect, useRef, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchCommonData } from '../store/common-actions';
+import { Fragment, useRef, useState } from 'react';
 
 import List from '../components/Lists/List';
 import AddClientsForm from '../components/UI/AddClientsForm';
 
 import classes from './Menu.module.css';
 
-const ClientsMenu = () => {
+const ClientsMenu = props => {
   const [clientIsChosen, setClientIsChosen] = useState(false);
   const [renderedUsers, setRenderedUsers] = useState([]);
   const [renderedProducts, setRenderedProducts] = useState([]);
@@ -15,16 +13,9 @@ const ClientsMenu = () => {
 
   const clientRef = useRef('');
 
-  const dispatch = useDispatch();
-
-  const fetchedClients = useSelector(state => state.commonState.clients);
-  const fetchedUsers = useSelector(state => state.commonState.users);
-  const fetchedProducts = useSelector(state => state.commonState.products);
-
-  // ⬇ fetching required data for post-processing
-  useEffect(() => {
-    dispatch(fetchCommonData());
-  }, [dispatch]);
+  const fetchedClients = props.clients;
+  const fetchedUsers = props.users;
+  const fetchedProducts = props.products;
 
   // ⬇ Transforming fetched data.
   const clientsProcessed = [];
@@ -37,7 +28,7 @@ const ClientsMenu = () => {
       availableProducts: fetchedClients[key].availableProducts,
     });
   }
-  console.log(fetchedClients);
+
   const usersProcessed = [];
 
   for (const key in fetchedUsers) {
