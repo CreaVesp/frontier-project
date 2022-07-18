@@ -27,12 +27,10 @@ export const fetchClientsData = () => {
 
 export const sendClientsData = clientsState => {
   return async () => {
-    // const sendRequest = async () => {
-    // const response =
     await fetch(
-      'https://react-http-54b71-default-rtdb.europe-west1.firebasedatabase.app/frontier-project/clients.json',
+      'https://react-http-54b71-default-rtdb.europe-west1.firebasedatabase.app/frontier-project.json',
       {
-        method: 'POST',
+        method: 'PUT',
         body: JSON.stringify({ clients: clientsState.clients }),
         headers: {
           'Content-Type': 'application/json',

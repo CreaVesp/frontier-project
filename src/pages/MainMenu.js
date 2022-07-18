@@ -1,9 +1,7 @@
 import { Fragment } from 'react';
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { fetchClientsData } from '../store/clients-actions';
-import { fetchUsersData } from '../store/users-actions';
-import { fetchProductsData } from '../store/products-actions';
+import { fetchCommonData } from '../store/common-actions';
 
 import List from '../components/Lists/List';
 
@@ -11,14 +9,12 @@ import classes from './Menu.module.css';
 
 const MainMenu = () => {
   const dispatch = useDispatch();
-  const clientsState = useSelector(state => state.clients.clients);
-  const usersState = useSelector(state => state.users.users);
-  const productsState = useSelector(state => state.products.products);
+  const clientsState = useSelector(state => state.commonState.clients);
+  const usersState = useSelector(state => state.commonState.users);
+  const productsState = useSelector(state => state.commonState.products);
 
   useEffect(() => {
-    dispatch(fetchClientsData());
-    dispatch(fetchUsersData());
-    dispatch(fetchProductsData());
+    dispatch(fetchCommonData());
   }, [dispatch]);
 
   return (

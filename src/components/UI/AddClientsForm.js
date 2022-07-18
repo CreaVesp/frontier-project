@@ -1,13 +1,17 @@
 import { Fragment, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { sendCommonData } from '../../store/common-actions';
+import { stateActions } from '../../store/common-state';
 import Modal from './Modal';
 
 import './AddForm.css';
 
 const AddClientsForm = props => {
+  const dispatch = useDispatch();
+  const commonState = useSelector(state => state.commonState);
   const [enteredName, setEnteredName] = useState('');
   const [userIsChecked, setUserIsChecked] = useState([]);
   const [productIsChecked, setProductIsChecked] = useState([]);
-  console.log(userIsChecked, productIsChecked);
 
   const users = props.users;
   const products = props.products;
@@ -41,11 +45,13 @@ const AddClientsForm = props => {
     e.preventDefault();
     const newClient = {
       name: enteredName,
-      linkedUsers: userIsChecked,
-      availableProducts: productIsChecked,
+      linkedUsers: userIsChecked.toString(),
+      availableProducts: productIsChecked.toString(),
       id: `c${Math.trunc(Math.random() * 1000)}`,
     };
     console.log(newClient);
+    dispatch(stateActions.addClient(newClient));
+    dispatch(sendCommonData(commonState));
     props.onHideModal();
   };
 
@@ -84,7 +90,10 @@ const AddClientsForm = props => {
             <label htmlFor='name' className='description'>
               Наименование клиента
             </label>
-            <input onBlur={nameHandler} id='name'></input>
+            <input
+              className='input-text'
+              onBlur={nameHandler}
+              id='name'></input>
           </div>
           <div className='input'>
             <label htmlFor='users' className='description'>
