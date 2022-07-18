@@ -1,4 +1,6 @@
-import { Fragment, useRef, useState } from 'react';
+import { Fragment, useRef, useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { sendCommonData } from '../store/common-actions';
 
 import List from '../components/Lists/List';
 import AddClientsForm from '../components/UI/AddClientsForm';
@@ -6,10 +8,22 @@ import AddClientsForm from '../components/UI/AddClientsForm';
 import classes from './Menu.module.css';
 
 const ClientsMenu = props => {
+  const dispatch = useDispatch();
   const [clientIsChosen, setClientIsChosen] = useState(false);
   const [renderedUsers, setRenderedUsers] = useState([]);
   const [renderedProducts, setRenderedProducts] = useState([]);
   const [showForm, setShowForm] = useState(false);
+  const [formIsSubmitted, setFormIsSubmitted] = useState(false);
+
+  const commonState = useSelector(state => state.commonState);
+
+  // Sending the added Client to a database after form was submitted.
+  useEffect(() => {
+    if (formIsSubmitted) {
+      console.log(commonState);
+      dispatch(sendCommonData(commonState));
+    }
+  }, [formIsSubmitted, dispatch, commonState]);
 
   const clientRef = useRef('');
 
@@ -88,6 +102,7 @@ const ClientsMenu = props => {
           onHideModal={hideModalHandler}
           users={usersProcessed}
           products={productsProcessed}
+          setFormIsSubmitted={setFormIsSubmitted}
         />
       )}
       <div className={classes.container}>

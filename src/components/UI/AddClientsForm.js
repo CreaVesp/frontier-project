@@ -1,6 +1,5 @@
 import { Fragment, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { sendCommonData } from '../../store/common-actions';
+import { useDispatch } from 'react-redux';
 import { stateActions } from '../../store/common-state';
 import Modal from './Modal';
 
@@ -8,7 +7,6 @@ import './AddForm.css';
 
 const AddClientsForm = props => {
   const dispatch = useDispatch();
-  const commonState = useSelector(state => state.commonState);
   const [enteredName, setEnteredName] = useState('');
   const [userIsChecked, setUserIsChecked] = useState([]);
   const [productIsChecked, setProductIsChecked] = useState([]);
@@ -45,13 +43,13 @@ const AddClientsForm = props => {
     e.preventDefault();
     const newClient = {
       name: enteredName,
-      linkedUsers: userIsChecked.toString(),
-      availableProducts: productIsChecked.toString(),
+      linkedUsers: userIsChecked.join(', '),
+      availableProducts: productIsChecked.join(', '),
       id: `c${Math.trunc(Math.random() * 1000)}`,
     };
     console.log(newClient);
     dispatch(stateActions.addClient(newClient));
-    dispatch(sendCommonData(commonState));
+    props.setFormIsSubmitted(true);
     props.onHideModal();
   };
 

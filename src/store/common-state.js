@@ -29,10 +29,34 @@ const stateSlice = createSlice({
           if (newClient.linkedUsers.includes(user.id)) {
             user.linkedClients = `${user.linkedClients}, ${newClient.id}`;
           }
+          if (
+            newClient.linkedUsers.includes(user.id) &&
+            !user.availableProducts.includes(newClient.availableProducts)
+          ) {
+            const updatedAvailableProducts = Array.from(
+              new Set([
+                ...user.availableProducts.split(', '),
+                ...newClient.availableProducts.split(', '),
+              ])
+            ).join(', ');
+            user.availableProducts = updatedAvailableProducts;
+          }
         }
         for (const product of Object.values(state.products)) {
           if (newClient.availableProducts.includes(product.id)) {
             product.availableToClients = `${product.availableToClients}, ${newClient.id}`;
+          }
+          if (
+            newClient.availableProducts.includes(product.id) &&
+            !product.availableToClients.includes(newClient.linkedUsers)
+          ) {
+            const updatedAvailableToUsers = Array.from(
+              new Set([
+                ...product.availableToUsers.split(', '),
+                ...newClient.linkedUsers.split(', '),
+              ])
+            ).join(', ');
+            product.availableToUsers = updatedAvailableToUsers;
           }
         }
       } else {
@@ -45,12 +69,36 @@ const stateSlice = createSlice({
         };
         for (const user of Object.values(state.users)) {
           if (newClient.linkedUsers.includes(user.id)) {
-            user.linkedClients = `${user.linkedClients}, ${newId}`;
+            user.linkedClients = `${user.linkedClients}, ${newClient.id}`;
+          }
+          if (
+            newClient.linkedUsers.includes(user.id) &&
+            !user.availableProducts.includes(newClient.availableProducts)
+          ) {
+            const updatedAvailableProducts = Array.from(
+              new Set([
+                ...user.availableProducts.split(', '),
+                ...newClient.availableProducts.split(', '),
+              ])
+            ).join(', ');
+            user.availableProducts = updatedAvailableProducts;
           }
         }
         for (const product of Object.values(state.products)) {
           if (newClient.availableProducts.includes(product.id)) {
-            product.availableToClients = `${product.availableToClients}, ${newId}`;
+            product.availableToClients = `${product.availableToClients}, ${newClient.id}`;
+          }
+          if (
+            newClient.availableProducts.includes(product.id) &&
+            !product.availableToClients.includes(newClient.linkedUsers)
+          ) {
+            const updatedAvailableToUsers = Array.from(
+              new Set([
+                ...product.availableToUsers.split(', '),
+                ...newClient.linkedUsers.split(', '),
+              ])
+            ).join(', ');
+            product.availableToUsers = updatedAvailableToUsers;
           }
         }
       }

@@ -7,11 +7,11 @@ export const fetchCommonData = () => {
         'https://react-http-54b71-default-rtdb.europe-west1.firebasedatabase.app/frontier-project.json'
       );
 
+      const data = await response.json();
+
       if (!response.ok) {
         throw new Error('Could not fetch the clients data.');
       }
-
-      const data = await response.json();
 
       return data;
     };
@@ -31,10 +31,11 @@ export const fetchCommonData = () => {
   };
 };
 
+// v2
 export const sendCommonData = commonState => {
   return async () => {
     const sendData = async () => {
-      const response = fetch(
+      const response = await fetch(
         'https://react-http-54b71-default-rtdb.europe-west1.firebasedatabase.app/frontier-project.json',
         {
           method: 'PUT',
@@ -43,24 +44,25 @@ export const sendCommonData = commonState => {
             users: commonState.users,
             products: commonState.products,
           }),
-          headers: {
-            'Content-Type': 'application/json',
-          },
         }
       );
+
       if (!response.ok) {
-        throw new Error('Something is wrong.');
+        throw new Error(
+          `${response.status}, ${response.message}` || 'Request has failed...'
+        );
       }
-      const data = await response.json();
-      return data;
     };
+
     try {
-      sendData();
+      await sendData();
     } catch (error) {
       console.log(error.message);
     }
   };
 };
+
+// v1
 // export const sendCommonData = commonState => {
 //   return async () => {
 //     await fetch(

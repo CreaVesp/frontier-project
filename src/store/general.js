@@ -1,15 +1,9 @@
 import { configureStore } from '@reduxjs/toolkit';
-// import clientsSlice from './clients-slice';
-// import usersSlice from './users-slice';
-// import productsSlice from './products-slice';
 import stateSlice from './common-state';
 
 const store = configureStore({
   reducer: {
     commonState: stateSlice.reducer,
-    // clients: clientsSlice.reducer,
-    // users: usersSlice.reducer,
-    // products: productsSlice.reducer,
   },
 });
 
