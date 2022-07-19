@@ -6,6 +6,7 @@ import List from '../components/Lists/List';
 import AddClientsForm from '../components/UI/AddClientsForm';
 
 import classes from './Menu.module.css';
+import { stateActions } from '../store/common-state';
 
 const ClientsMenu = props => {
   const dispatch = useDispatch();
@@ -95,6 +96,13 @@ const ClientsMenu = props => {
     setShowForm(false);
   };
 
+  const deleteUserButtonHandler = () => {
+    console.log(clientRef.current.value);
+    dispatch(stateActions.removeClient(clientRef.current.value));
+    // ⬇ отправка обновленного состояния с удаленным пользователем в базу.
+    // dispatch(sendCommonData(commonState));
+  };
+
   return (
     <Fragment>
       {showForm && (
@@ -139,7 +147,11 @@ const ClientsMenu = props => {
               Добавить
             </button>
             <button className={classes.edit}>Редактировать</button>
-            <button className={classes.delete}>Удалить</button>
+            <button
+              className={classes.delete}
+              onClick={deleteUserButtonHandler}>
+              Удалить
+            </button>
           </div>
         )}
       </div>
