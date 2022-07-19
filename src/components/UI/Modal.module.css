@@ -15,11 +15,19 @@
   width: 60%;
   height: 60vh;
   background-color: white;
-  padding: 1rem;
-  border-radius: 14px;
+  border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   z-index: 30;
   animation: slide-down 300ms ease-out forwards;
+}
+
+.content {
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  justify-content: center;
+  gap: 3.6rem;
 }
 
 @keyframes slide-down {

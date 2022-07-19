@@ -4,6 +4,7 @@ import { sendCommonData } from '../store/common-actions';
 
 import List from '../components/Lists/List';
 import AddClientsForm from '../components/UI/AddClientsForm';
+import DeleteNotification from '../components/UI/DeleteNotification';
 
 import classes from './Menu.module.css';
 import { stateActions } from '../store/common-state';
@@ -15,6 +16,7 @@ const ClientsMenu = props => {
   const [renderedProducts, setRenderedProducts] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [formIsSubmitted, setFormIsSubmitted] = useState(false);
+  const [showDeleteNotification, setShowDeleteNotification] = useState(false);
 
   const commonState = useSelector(state => state.commonState);
 
@@ -94,6 +96,7 @@ const ClientsMenu = props => {
   };
   const hideModalHandler = () => {
     setShowForm(false);
+    setShowDeleteNotification(false);
   };
 
   const deleteUserButtonHandler = () => {
@@ -101,6 +104,11 @@ const ClientsMenu = props => {
     dispatch(stateActions.removeClient(clientRef.current.value));
     // ⬇ отправка обновленного состояния с удаленным пользователем в базу.
     // dispatch(sendCommonData(commonState));
+    setShowDeleteNotification(false);
+  };
+
+  const deleteNotificationHandler = () => {
+    setShowDeleteNotification(true);
   };
 
   return (
@@ -111,6 +119,13 @@ const ClientsMenu = props => {
           users={usersProcessed}
           products={productsProcessed}
           setFormIsSubmitted={setFormIsSubmitted}
+        />
+      )}
+      {showDeleteNotification && (
+        <DeleteNotification
+          client={fetchedClients[clientRef.current.value].name}
+          onHideModal={hideModalHandler}
+          deleteHandler={deleteUserButtonHandler}
         />
       )}
       <div className={classes.container}>
@@ -149,7 +164,7 @@ const ClientsMenu = props => {
             <button className={classes.edit}>Редактировать</button>
             <button
               className={classes.delete}
-              onClick={deleteUserButtonHandler}>
+              onClick={deleteNotificationHandler}>
               Удалить
             </button>
           </div>
