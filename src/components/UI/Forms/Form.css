@@ -13,7 +13,7 @@
   flex-direction: column;
   justify-content: flex-start;
   gap: 1.8rem;
-  width: 30rem;
+  width: 32rem;
   height: 40vh;
   overflow: auto;
 }
@@ -40,6 +40,7 @@
   align-items: center;
   justify-content: flex-end;
   gap: 3.6rem;
+  padding-bottom: 3.6rem;
 }
 
 .btn {

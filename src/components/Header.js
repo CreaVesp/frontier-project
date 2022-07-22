@@ -10,7 +10,7 @@ const Header = () => {
             <NavLink
               to='/main'
               className={navData => (navData.isActive ? classes.active : '')}>
-              Главное меню
+              Обзор
             </NavLink>
           </li>
           <li>

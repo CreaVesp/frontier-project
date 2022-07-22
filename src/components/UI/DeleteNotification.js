@@ -6,10 +6,11 @@ const DeleteNotification = props => {
   return (
     <Modal onHideModal={props.onHideModal}>
       <div className='container'>
-        <span className='question'>
-          Вы уверены, что хотите удалить
-          <p className='deleted-item'>{props.client}</p>
-        </span>
+        {
+          <span className='question'>
+            Вы уверены, что хотите удалить <strong>{props.client}</strong> ?
+          </span>
+        }
         <div className='buttons'>
           <button className='btn-delete' onClick={props.deleteHandler}>
             Удалить

@@ -99,8 +99,10 @@ const stateSlice = createSlice({
           const leftLinkedClients = Array.from(
             user.linkedClients.split(', ')
           ).filter(client => client !== removableClientID);
+          console.log(leftLinkedClients);
+          console.log(leftLinkedClients.join(', ').length);
 
-          if (leftLinkedClients.toString()) {
+          if (leftLinkedClients.join(', ').length !== 0) {
             leftLinkedClients.forEach(client =>
               newUserAvProds.push(
                 Array.from(
@@ -109,8 +111,11 @@ const stateSlice = createSlice({
                       state.clients[client].availableProducts.split(', ')
                     ).filter(
                       product =>
-                        product !==
-                        state.clients[removableClientID].availableProducts
+                        !Array.from(
+                          state.clients[
+                            removableClientID
+                          ].availableProducts.split(', ')
+                        ).includes(product)
                     )
                   )
                 ).join(', ')

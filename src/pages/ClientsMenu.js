@@ -3,7 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { sendCommonData } from '../store/common-actions';
 
 import List from '../components/Lists/List';
-import AddClientsForm from '../components/UI/AddClientsForm';
+import AddClientsForm from '../components/UI/Forms/AddClientsForm';
+import EditClientsForm from '../components/UI/Forms/EditClientForm';
 import DeleteNotification from '../components/UI/DeleteNotification';
 
 import classes from './Menu.module.css';
@@ -14,7 +15,8 @@ const ClientsMenu = props => {
   const [clientIsChosen, setClientIsChosen] = useState(false);
   const [renderedUsers, setRenderedUsers] = useState([]);
   const [renderedProducts, setRenderedProducts] = useState([]);
-  const [showForm, setShowForm] = useState(false);
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [showEditForm, setShowEditForm] = useState(false);
   const [formIsSubmitted, setFormIsSubmitted] = useState(false);
   const [showDeleteNotification, setShowDeleteNotification] = useState(false);
 
@@ -24,7 +26,7 @@ const ClientsMenu = props => {
   useEffect(() => {
     if (formIsSubmitted) {
       console.log(commonState);
-      dispatch(sendCommonData(commonState));
+      // dispatch(sendCommonData(commonState));
     }
   }, [formIsSubmitted, dispatch, commonState]);
 
@@ -92,10 +94,16 @@ const ClientsMenu = props => {
   };
 
   const addUserButtonHandler = () => {
-    setShowForm(true);
+    setShowAddForm(true);
   };
+
+  const editUserButtonHandler = () => {
+    setShowEditForm(true);
+  };
+
   const hideModalHandler = () => {
-    setShowForm(false);
+    setShowAddForm(false);
+    setShowEditForm(false);
     setShowDeleteNotification(false);
   };
 
@@ -113,9 +121,19 @@ const ClientsMenu = props => {
 
   return (
     <Fragment>
-      {showForm && (
+      {showAddForm && (
         <AddClientsForm
           onHideModal={hideModalHandler}
+          users={usersProcessed}
+          products={productsProcessed}
+          setFormIsSubmitted={setFormIsSubmitted}
+        />
+      )}
+      {showEditForm && (
+        <EditClientsForm
+          onHideModal={hideModalHandler}
+          chosenClient={clientRef.current.value}
+          clients={fetchedClients}
           users={usersProcessed}
           products={productsProcessed}
           setFormIsSubmitted={setFormIsSubmitted}
@@ -161,7 +179,9 @@ const ClientsMenu = props => {
             <button onClick={addUserButtonHandler} className={classes.add}>
               Добавить
             </button>
-            <button className={classes.edit}>Редактировать</button>
+            <button className={classes.edit} onClick={editUserButtonHandler}>
+              Редактировать
+            </button>
             <button
               className={classes.delete}
               onClick={deleteNotificationHandler}>

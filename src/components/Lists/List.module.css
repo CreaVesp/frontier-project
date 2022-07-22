@@ -7,5 +7,5 @@
   gap: 3.6rem;
   overflow: auto;
   width: 35rem;
-  height: 50rem;
+  max-height: 65vh;
 }
